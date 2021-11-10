@@ -1,5 +1,5 @@
 import React from "react";
-import getSocketClient from "socket.io-client";
+import getSocketClient, { Socket } from "socket.io-client";
 
 import address from "../../../modules/address";
 
@@ -13,10 +13,14 @@ export default class App extends React.Component
         this.handleSocketEvents(socket);
     }
 
+    /**
+     * Dispatch the events for this component socket
+     * @param {Socket} socket 
+     */
     handleSocketEvents(socket)
     {
         socket.on('server', data => {
-            console.log(data);
+            socket.emit('socket:side', 'client');
         });
     }
 
