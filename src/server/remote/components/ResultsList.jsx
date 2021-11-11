@@ -1,7 +1,8 @@
 import React from "react";
 import ResultsItem from "./ResultsItem";
+import "./Results.css";
 
-export default class ResultsElement extends React.Component
+export default class ResultsList extends React.Component
 {
     constructor(props)
     {
@@ -25,7 +26,8 @@ export default class ResultsElement extends React.Component
         const items = this.state.results.map((item, index) => {
             return <ResultsItem 
                 key = {index}
-                name = {item.title}
+                item = {item}
+                onClick = {this.props.onItemClick}
             />
         });
 

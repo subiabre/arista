@@ -4,8 +4,8 @@ import axios from "axios";
 
 import address from "../../../modules/address";
 import SearchElement from "./SearchElement";
-import ResultsElement from "./ResultsElement";
-import ResultsItem from "./ResultsItem";
+import ResultsList from "./ResultsList";
+import QueueList from "./QueueList";
 
 export default class RemoteApp extends React.Component
 {
@@ -14,7 +14,7 @@ export default class RemoteApp extends React.Component
         super(props);
         const socket = getSocketClient(address.get());
 
-        this.state = { searchResults: [] };
+        this.state = { searchResults: [], queueItems: [] };
 
         this.socket = socket;
         this.handleSocketEvents(socket);
@@ -29,6 +29,10 @@ export default class RemoteApp extends React.Component
     {
         socket.on('server', data => {
             socket.emit('socket:side', 'remote');
+        });
+
+        socket.on('queue:update', data => {
+            this.setState({ queueItems: data });
         });
     }
 
@@ -47,6 +51,16 @@ export default class RemoteApp extends React.Component
             ;
     }
 
+    sendItemToQueue(item)
+    {
+        this.socket.emit('queue:push', item);
+    }
+
+    removeItemFromQueue(item)
+    {
+        this.socket.emit('queue:remove', item);
+    }
+
     render()
     {
         return (
@@ -55,8 +69,13 @@ export default class RemoteApp extends React.Component
                     onInput = {() => {}}
                     onSubmit = {this.submitSearch.bind(this)}
                 />
-                <ResultsElement 
+                <ResultsList
                     results = {this.state.searchResults}
+                    onItemClick = {this.sendItemToQueue.bind(this)}
+                />
+                <QueueList
+                    items = {this.state.queueItems}
+                    onItemClick = {this.removeItemFromQueue.bind(this)}
                 />
             </div>
         );
