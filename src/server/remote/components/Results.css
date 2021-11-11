@@ -1,0 +1,28 @@
+#appremote div {
+    display: flex;
+}
+
+ul {
+    width: calc(50vw - 2em);
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style-type: none;
+    color: white;
+    background-color: black;
+}
+
+li {
+    padding: 1em;
+    display: flex;
+}
+
+li:hover {
+    background-color: grey;
+}
+
+li img {
+    width: 100%;
+    flex: 0 0 50%;
+}
