@@ -8,7 +8,7 @@ const listen = (server) =>
     const io = new Server(server, { origins: '*' });
 
     io.on('connection', (socket) => {
-        terminal.writeInfoLine(`New socket connected: ${socket.id}`);
+        terminal.writeInfoLine(`[Sockets] new: ${socket.id}`);
 
         socket.emit('server', 'hello');
 
@@ -46,14 +46,14 @@ const remove = (array, item) =>
 const events = (socket) =>
 {
     socket.on('disconnect', () => {
-        terminal.writeInfoLine(`Socket ${socket.id} disconnected`);
+        terminal.writeInfoLine(`[Sockets] out: ${socket.id}`);
 
         sockets.client = remove(sockets.client, socket);
         sockets.remote = remove(sockets.remote, socket);
     });
 
     socket.on('socket:side', type => {
-        terminal.writeInfoLine(`Socket ${socket.id} is on ${type} side`);
+        terminal.writeInfoLine(`[Sockets] side:${type}: ${socket.id}`);
 
         sockets[type] = push(sockets[type], socket);
     });

@@ -4,5 +4,6 @@ const url = 'http://localhost';
 module.exports = {
     port: port,
     url: url,
-    get: () => `${url}:${port}`
+    get: () => `${url}:${port}`,
+    youtube: (query) => `${url}:${port}/youtube/${query}`
 }

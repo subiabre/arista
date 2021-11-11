@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
+import RemoteApp from "./components/RemoteApp";
 
 ReactDOM.render(
-    <App />,
+    <RemoteApp />,
     document.getElementById('appremote')
 );

@@ -7,6 +7,7 @@ const addr = require("./src/modules/address");
 const express = require("express");
 const pyramid = express();
 
+const youtube = require("./src/modules/youtube");
 const sockets = require("./src/modules/sockets");
 const terminal = require("./src/modules/terminal");
 
@@ -27,4 +28,5 @@ server.listen(addr.port, () => {
     terminal.writeInfoLine(`Client at ${addr.get()}/client`);
 });
 
+youtube.routes(pyramid);
 sockets.listen(server);

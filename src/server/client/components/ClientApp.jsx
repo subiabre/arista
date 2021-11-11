@@ -3,7 +3,7 @@ import getSocketClient, { Socket } from "socket.io-client";
 
 import address from "../../../modules/address";
 
-export default class App extends React.Component
+export default class ClientApp extends React.Component
 {
     constructor(props)
     {
