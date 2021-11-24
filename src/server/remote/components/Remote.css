@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;    
+}
+
+.search {
+    display: inline-flex;
+}
+
+.search input {
+    width: calc(90vw - 0em);
+    margin: 0;
+    padding: 1em;
+    color: black;
+    border: none;
+    background-color: grey;
+}
+
+.search button {
+    width: calc(10vw - 2em);
+    margin: 0;
+    padding: 1em;
+    color: white;
+    border: none;
+    background-color: black;
+}
+
+.lists {
+    display: flex;
+}
+
+.lists ul {
+    width: calc(50vw - 2em);
+    height: calc(100vh - 3em);
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style-type: none;
+    color: white;
+    background-color: black;
+    flex-grow: 1;
+}
+
+li {
+    padding: 1em;
+    display: flex;
+}
+
+li:hover {
+    background-color: grey;
+}
+
+li img {
+    width: 100%;
+    flex: 0 0 50%;
+}

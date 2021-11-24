@@ -7,6 +7,8 @@ import SearchElement from "./SearchElement";
 import ResultsList from "./ResultsList";
 import QueueList from "./QueueList";
 
+import "./Remote.css";
+
 export default class RemoteApp extends React.Component
 {
     constructor(props)
@@ -69,14 +71,16 @@ export default class RemoteApp extends React.Component
                     onInput = {() => {}}
                     onSubmit = {this.submitSearch.bind(this)}
                 />
-                <ResultsList
-                    results = {this.state.searchResults}
-                    onItemClick = {this.sendItemToQueue.bind(this)}
-                />
-                <QueueList
-                    items = {this.state.queueItems}
-                    onItemClick = {this.removeItemFromQueue.bind(this)}
-                />
+                <div className = "lists" >
+                    <ResultsList
+                        results = {this.state.searchResults}
+                        onItemClick = {this.sendItemToQueue.bind(this)}
+                    />
+                    <QueueList
+                        items = {this.state.queueItems}
+                        onItemClick = {this.removeItemFromQueue.bind(this)}
+                    />
+                </div>
             </div>
         );
     }

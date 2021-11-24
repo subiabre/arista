@@ -1,6 +1,5 @@
 import React from "react";
 import ResultsItem from "./ResultsItem";
-import "./Results.css";
 
 export default class ResultsList extends React.Component
 {
