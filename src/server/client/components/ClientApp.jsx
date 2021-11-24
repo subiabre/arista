@@ -8,7 +8,9 @@ export default class ClientApp extends React.Component
     constructor(props)
     {
         super(props);
-        const socket = getSocketClient(address.get());
+        const socket = getSocketClient(address.getServer());
+
+        this.state = { playing: { url: '' } }
 
         this.handleSocketEvents(socket);
     }
@@ -22,12 +24,16 @@ export default class ClientApp extends React.Component
         socket.on('server', data => {
             socket.emit('socket:side', 'client');
         });
+
+        socket.on('queue:play', data => {
+            this.setState({ playing: data });
+        });
     }
 
     render()
     {
         return (
-            <h1>Client</h1>
+            <div></div>
         );
     }
 }

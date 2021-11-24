@@ -7,6 +7,7 @@ const createSocketList = (array) => {
     list.array = array;
     list.push = (item) => list.array = push(list.array, item);
     list.remove = (item) => list.array = remove(list.array, item);
+    list.emit = (channel, message) => list.array.forEach((item) => item.emit(channel, message));
 
     return list;
 }
@@ -80,10 +81,10 @@ const events = (socket, io) =>
         remotes.remove(socket);
     });
 
-    socket.on('socket:side', type => {
-        terminal.sockets.side(socket.id, type);
+    socket.on('socket:side', side => {
+        terminal.sockets.side(socket.id, side);
 
-        switch (type) {
+        switch (side) {
             case 'client':
                 clients.push(socket);
                 break;
@@ -102,6 +103,7 @@ const events = (socket, io) =>
     socket.on('queue:remove', item => {
         queue.remove(item);
 
+        clients.emit('queue:play', item.data);
         io.emit('queue:update', queue.array);
     });
 }

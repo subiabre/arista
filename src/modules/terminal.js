@@ -9,7 +9,7 @@ const output = new UI({
 });
 
 const prefixApp = chalk.bgGreen.white(`[arista]`)
-const prefixSockets = chalk.bgMagenta.black(`${prefixApp}[sockets]`);
+const prefixSockets = chalk.bgMagenta.black(`[sockets]`);
 
 module.exports = {
     /**
