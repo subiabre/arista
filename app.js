@@ -2,11 +2,11 @@ require("dotenv").config();
 
 const http = require("http");
 const path = require("path");
-const addr = require("./src/modules/address");
 
 const express = require("express");
 const pyramid = express();
 
+const address = require("./src/modules/address");
 const youtube = require("./src/modules/youtube");
 const sockets = require("./src/modules/sockets");
 const terminal = require("./src/modules/terminal");
@@ -23,9 +23,9 @@ pyramid.get('/client', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'server', 'client', 'index.html'));
 });
 
-server.listen(addr.port, () => {
-    terminal.writeInfoLine(`Remote at ${addr.get()}`);
-    terminal.writeInfoLine(`Client at ${addr.get()}/client`);
+server.listen(address.port, () => {
+    terminal.writeInfoLine(`Remote at ${address.getServer()}`);
+    terminal.writeInfoLine(`Client at ${address.getClient()}`);
 });
 
 youtube.routes(pyramid);

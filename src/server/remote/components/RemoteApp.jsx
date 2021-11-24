@@ -12,7 +12,7 @@ export default class RemoteApp extends React.Component
     constructor(props)
     {
         super(props);
-        const socket = getSocketClient(address.get());
+        const socket = getSocketClient(address.getServer());
 
         this.state = { searchResults: [], queueItems: [] };
 
@@ -45,7 +45,7 @@ export default class RemoteApp extends React.Component
 
         const query = event.target.firstChild.value;
 
-        axios.get(address.youtube(query))
+        axios.get(address.getYoutube(query))
             .then(result => this.setState({ searchResults: result.data.result.items }))
             .catch(error => console.log(error))
             ;
