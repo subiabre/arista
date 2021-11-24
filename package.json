@@ -1,5 +1,5 @@
 {
-  "name": "pyramid",
+  "name": "arista",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,7 +8,7 @@
     "build": "webpack",
     "watch": "concurrently \"webpack --watch\" \"nodemon app.js\""
   },
-  "author": "",
+  "author": "subiabrewd@gmail.com",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
