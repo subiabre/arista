@@ -24,8 +24,8 @@ pyramid.get('/client', (req, res) => {
 });
 
 server.listen(address.port, () => {
-    terminal.writeInfoLine(`Remote at ${address.getServer()}`);
-    terminal.writeInfoLine(`Client at ${address.getClient()}`);
+    terminal.info(`Remote at ${address.getServer()}`);
+    terminal.info(`Client at ${address.getClient()}`);
 });
 
 youtube.routes(pyramid);
