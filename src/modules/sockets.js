@@ -1,58 +1,13 @@
-const {Server, Socket} = require("socket.io");
 const terminal = require("./terminal");
+const {Server, Socket} = require("socket.io");
 
-const createSocketList = (array) => {
-    const list = new Object();
+const QueueList = require("./lists/QueueList");
+const SocketList = require("./lists/SocketList");
 
-    list.array = array;
-    list.push = (item) => list.array = push(list.array, item);
-    list.remove = (item) => list.array = remove(list.array, item);
-    list.emit = (channel, message) => list.array.forEach((item) => item.emit(channel, message));
+let queue = new QueueList([]);
 
-    return list;
-}
-
-const createQueueList = (array) => { 
-    const list = new Object();
-
-    list.array = array;
-    list.push = (item) => list.array = push(list.array, { queueId: new Date().getTime(), data: item.item });
-    list.indexOf = (item) => list.array.indexOf(list.array.filter((i) => i.queueId === item.queueId)[0]);
-    list.remove = (item) => {
-        const pos = list.indexOf(item); 
-        list.array = [...list.array.slice(0, pos), ...list.array.slice(pos + 1)]
-    };
-
-    return list;
-}
-
-const clients = createSocketList([]);
-const remotes = createSocketList([]);
-const queue = createQueueList([]);
-
-/**
- * @param {Array} array 
- * @param {Socket} item 
- * @returns 
- */
-const push = (array, item) =>
-{
-    return [...array, item];
-}
-
-/**
- * @param {Array} array 
- * @param {Socket} item 
- * @returns 
- */
-const remove = (array, item) =>
-{
-    const pos = array.indexOf(item);
-
-    if (pos < 0) return array;
-
-    return [...array.slice(0, pos), ...array.slice(pos + 1)];
-}
+let clients = new SocketList([]);
+let remotes = new SocketList([]);
 
 const listen = (server) =>
 {
@@ -73,12 +28,11 @@ const listen = (server) =>
  */
 const events = (socket, io) =>
 {
-
     socket.on('disconnect', () => {
         terminal.sockets.out(socket.id);
 
-        clients.remove(socket);
-        remotes.remove(socket);
+        clients = clients.remove(socket);
+        remotes = remotes.remove(socket);
     });
 
     socket.on('socket:side', side => {
@@ -86,25 +40,31 @@ const events = (socket, io) =>
 
         switch (side) {
             case 'client':
-                clients.push(socket);
+                clients = clients.push(socket);
                 break;
             case 'remote':
-                remotes.push(socket);
+                remotes = remotes.push(socket);
                 break;
         }
     });
 
     socket.on('queue:push', item => {
-        queue.push(item);
+        queue = queue.push(item);
 
-        io.emit('queue:update', queue.array);
+        io.emit('queue:update', queue.items);
+    });
+
+    socket.on('queue:play', item => {
+        queue = queue.setAsPlaying(item);
+
+        clients.emit('queue:play', item.data);
+        io.emit('queue:update', queue.items);
     });
 
     socket.on('queue:remove', item => {
-        queue.remove(item);
+        queue = queue.remove(item);
 
-        clients.emit('queue:play', item.data);
-        io.emit('queue:update', queue.array);
+        io.emit('queue:update', queue.items);
     });
 }
 

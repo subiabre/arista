@@ -11,6 +11,7 @@ export default class QueueItem extends React.Component
     {
         return (
             <li
+                className = {this.props.item.isPlaying ? 'active' : 'idle'}
                 onClick = {this.onClick.bind(this)}
             >
                 {this.props.item.data.title}

@@ -31,7 +31,7 @@ export default class QueueList extends React.Component
         });
 
         return (
-            <ul>
+            <ul className = "queue" >
                 {items}
             </ul>
         );

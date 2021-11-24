@@ -4,7 +4,7 @@ export default class ResultsItem extends React.Component
 {
     onClick()
     {
-        this.props.onClick(this.props);
+        this.props.onClick(this.props.item);
     }
 
     render()

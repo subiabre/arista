@@ -33,7 +33,9 @@ export default class ClientApp extends React.Component
     render()
     {
         return (
-            <div></div>
+            <div>
+                {this.state.playing.url}
+            </div>
         );
     }
 }

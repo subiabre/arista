@@ -10,6 +10,7 @@ export default class SearchElement extends React.Component
                 onSubmit = {this.props.onSubmit}
             >
                 <input
+                    autoFocus = {true}
                     onInput = {this.props.onInput}
                 ></input>
                 <button

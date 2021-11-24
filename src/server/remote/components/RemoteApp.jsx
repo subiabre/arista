@@ -58,6 +58,11 @@ export default class RemoteApp extends React.Component
         this.socket.emit('queue:push', item);
     }
 
+    playItemFromQueue(item)
+    {
+        this.socket.emit('queue:play', item);
+    }
+
     removeItemFromQueue(item)
     {
         this.socket.emit('queue:remove', item);
@@ -78,7 +83,7 @@ export default class RemoteApp extends React.Component
                     />
                     <QueueList
                         items = {this.state.queueItems}
-                        onItemClick = {this.removeItemFromQueue.bind(this)}
+                        onItemClick = {this.playItemFromQueue.bind(this)}
                     />
                 </div>
             </div>
