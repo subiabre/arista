@@ -73,8 +73,12 @@ const events = (socket, io) =>
         io.emit('queue:update', queue.items);
     });
 
-    socket.on('player:play', item => {
-        io.emit('player:play');
+    socket.on('player:play', data => {
+        clients.emit('player:play', data);
+    });
+
+    socket.on('player:pause', data => {
+        clients.emit('player:pause', data);
     });
 }
 

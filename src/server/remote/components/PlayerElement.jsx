@@ -1,5 +1,6 @@
 import React from "react";
 import YouTube from "react-youtube";
+import PlayPauseButton from "./player/PlayPauseButton";
 
 export default class PlayerElement extends React.Component
 {
@@ -8,6 +9,14 @@ export default class PlayerElement extends React.Component
         super(props);
 
         this.state = { item: props.item };
+    }
+
+    compressPlayerInfo(player)
+    {
+        return {
+            time: player.getCurrentTime(),
+            volume: player.getVolume()
+        };
     }
 
     shouldComponentUpdate(nextProps)
@@ -22,7 +31,12 @@ export default class PlayerElement extends React.Component
 
     handlePlay(event)
     {
-        this.props.onPlay(this.player);
+        this.props.onPlay(this.player, this.compressPlayerInfo(this.player));
+    }
+
+    handlePause(event)
+    {
+        this.props.onPause(this.player, this.compressPlayerInfo(this.player));
     }
 
     handleOnReady(event)
@@ -37,7 +51,12 @@ export default class PlayerElement extends React.Component
         return (
             <div className = "player">
                 <span>{this.state.item.data.title}</span>
-                <button onClick = {this.handlePlay.bind(this)}>Play</button>
+                
+                <PlayPauseButton
+                    setPlay = {this.handlePlay.bind(this)}
+                    setPause = {this.handlePause.bind(this)}
+                />
+                
                 <YouTube
                     className = "player-hidden-iframe"
                     videoId = {this.state.item.data.id}
