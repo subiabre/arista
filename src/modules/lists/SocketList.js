@@ -2,8 +2,7 @@ const { Socket } = require("socket.io");
 
 module.exports = class SocketList
 {
-    constructor(sockets = [])
-    {
+    constructor(sockets = []) {
         /**
          * The internal objects
          * @type {Array <Socket>}
@@ -44,6 +43,52 @@ module.exports = class SocketList
             ...this.sockets.slice(0, pos),
             ...this.sockets.slice(pos + 1)
         ]);
+    }
+
+    /**
+     * Update a Socket in the array
+     * @param {Socket} outdated The socket to update
+     * @param {Socket} updated The socket to replace the original object
+     * @returns {SocketList}
+     */
+    update(outdated, updated)
+    {
+        const pos = this.indexOf(outdated);
+
+        return new SocketList([
+            ...this.sockets.slice(0, pos),
+            updated,
+            ...this.sockets.slice(pos + 1)
+        ]);
+    }
+
+    /**
+     * Update a Socket as ready to play
+     * @param {Socket} socket
+     * @param {Boolean} ready
+     * @returns {SocketList}
+     */
+    setAsReady(socket, ready = true)
+    {
+        socket.isPlaybackReady = ready;
+
+        return this.update(socket, socket);
+    }
+
+    /**
+     * Check if all the sockets in the array are ready
+     * @returns {Boolean}
+     */
+    hasAllReady()
+    {
+        for (let index = 0; index < this.sockets.length; index++) {
+            const current = this.sockets[index];
+            
+            if (!current.hasOwnProperty('isPlaybackReady')) return false;
+            if (!current.isPlaybackReady) return false;
+            
+            return true; 
+        }
     }
 
     /**

@@ -48,6 +48,12 @@ const events = (socket, io) =>
         }
     });
 
+    socket.on('client:ready', client => {
+        clients = clients.setAsReady(clients.sockets.find(c => c.id == client));
+
+        if (clients.hasAllReady()) remotes.emit('player:ready', 'ready');
+    });
+
     socket.on('queue:push', item => {
         queue = queue.push(item);
 

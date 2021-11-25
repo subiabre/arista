@@ -54,16 +54,16 @@ module.exports = class QueueList
      * Update an item in the array with a new item
      * @param {Object} outdated The object to update
      * @param {Object} updated The object to replace the original object
-     * @returns {QueueItem}
+     * @returns {QueueList}
      */
     update(outdated, updated)
     {
         const pos = this.indexOf(outdated);
 
         return new QueueList([
-            ...list.array.slice(0, pos),
-               updated,
-            ...list.array.slice(pos + 1)
+            ...this.items.array.slice(0, pos),
+            updated,
+            ...this.items.slice(pos + 1)
         ]);
     }
 

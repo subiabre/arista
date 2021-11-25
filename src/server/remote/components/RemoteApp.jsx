@@ -36,6 +36,10 @@ export default class RemoteApp extends React.Component
         socket.on('queue:update', data => {
             this.setState({ queueItems: data });
         });
+
+        socket.on('player:ready', player => {
+            console.log('player is ready');
+        });
     }
 
     /**

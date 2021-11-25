@@ -12,6 +12,7 @@ export default class ClientApp extends React.Component
 
         this.state = { playing: { url: '' } }
 
+        this.socket = socket;
         this.handleSocketEvents(socket);
     }
 
@@ -21,8 +22,10 @@ export default class ClientApp extends React.Component
      */
     handleSocketEvents(socket)
     {
+
         socket.on('server', data => {
             socket.emit('socket:side', 'client');
+            socket.emit('client:ready', this.socket.id);
         });
 
         socket.on('queue:play', data => {
