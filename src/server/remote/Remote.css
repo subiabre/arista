@@ -65,9 +65,12 @@ li img {
     height: 3em;
     margin: 0;
     padding: 1em;
-    display: block;
     overflow: hidden;
-    background-color: blue;
+    background-color: magenta;
+}
+
+.player p {
+    margin: 0.5em 0;
 }
 
 .player-hidden-iframe {

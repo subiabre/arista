@@ -80,6 +80,14 @@ const events = (socket, io) =>
     socket.on('player:pause', data => {
         clients.emit('player:pause', data);
     });
+
+    socket.on('player:volume', data => {
+        clients.emit('player:volume', data);
+    });
+
+    socket.on('player:time', data => {
+        clients.emit('player:time', data);
+    });
 }
 
 module.exports = { listen };

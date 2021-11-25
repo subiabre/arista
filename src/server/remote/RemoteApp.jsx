@@ -76,18 +76,24 @@ export default class RemoteApp extends React.Component
         this.socket.emit('queue:remove', item);
     }
 
-    playItemInPlayer(player, data)
+    onPlay(data)
     {
         this.socket.emit('player:play', data);
-
-        player.playVideo();
     }
 
-    pauseItemInPlayer(player, data)
+    onPause(data)
     {
         this.socket.emit('player:pause', data);
+    }
 
-        player.pauseVideo();
+    onTimeChange(data)
+    {
+        this.socket.emit('player:time', data);
+    }
+
+    onVolumeChange(data)
+    {
+        this.socket.emit('player:volume', data);
     }
 
     render()
@@ -110,8 +116,10 @@ export default class RemoteApp extends React.Component
                 </div>
                 <PlayerElement
                     item = {this.state.playerItem}
-                    onPlay = {this.playItemInPlayer.bind(this)}
-                    onPause = {this.pauseItemInPlayer.bind(this)}
+                    onPlay = {this.onPlay.bind(this)}
+                    onPause = {this.onPause.bind(this)}
+                    onTimeChange = {this.onTimeChange.bind(this)}
+                    onVolumeChange = {this.onVolumeChange.bind(this)}
                 />
             </div>
         );

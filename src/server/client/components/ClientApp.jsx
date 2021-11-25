@@ -38,6 +38,14 @@ export default class ClientApp extends React.Component
         socket.on('player:pause', data => {
             this.player.pauseVideo();
         });
+
+        socket.on('player:volume', data => {
+            this.player.setVolume(data.volume);
+        });
+
+        socket.on('player:time', data => {
+            this.player.seekTo(data.time);
+        })
     }
 
     handlePlayerReady(event)
