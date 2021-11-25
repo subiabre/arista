@@ -14,6 +14,7 @@
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "get-ip-addresses": "^1.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-youtube": "^7.13.1",

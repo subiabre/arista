@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const ip = require("get-ip-addresses").default();
+
 const http = require("http");
 const path = require("path");
 
@@ -24,8 +26,8 @@ arista.get('/client', (req, res) => {
 });
 
 server.listen(address.port, () => {
-    terminal.info(`Remote at ${address.getServer()}`);
-    terminal.info(`Client at ${address.getClient()}`);
+    terminal.info(`Remote at \n${address.getServer()}\nhttp://${ip}:${address.port}`);
+    terminal.info(`Client at \n${address.getClient()}\nhttp://${ip}:${address.port}/client`);
 });
 
 youtube.routes(arista);

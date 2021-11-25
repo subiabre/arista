@@ -106,7 +106,6 @@ export default class PlayerElement extends React.Component
             <div className = "player">
                 <p>
                     {this.state.item.data.title}
-                    <span>{this.state.currentTime}</span>
                 </p>
                 
                 <PlayPauseButton
@@ -114,6 +113,7 @@ export default class PlayerElement extends React.Component
                     setPause = {this.handlePause.bind(this)}
                 />
 
+                <span>{this.state.currentTime}</span>
                 <TimeSlider
                     current = {this.state.currentTime}
                     duration = {this.state.player.getDuration()}

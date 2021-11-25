@@ -66,11 +66,8 @@ li img {
     margin: 0;
     padding: 1em;
     overflow: hidden;
+    display: inline-flex;
     background-color: magenta;
-}
-
-.player p {
-    margin: 0.5em 0;
 }
 
 .player-hidden-iframe {
