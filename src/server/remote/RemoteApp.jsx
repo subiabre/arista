@@ -2,12 +2,14 @@ import React from "react";
 import getSocketClient, { Socket } from "socket.io-client";
 import axios from "axios";
 
-import address from "../../../modules/address";
-import SearchElement from "./SearchElement";
-import ResultsList from "./ResultsList";
-import QueueList from "./QueueList";
+import address from "../../modules/address";
+
+import SearchElement from "./components/SearchElement";
+import ResultsList from "./components/ResultsList";
+import QueueList from "./components/QueueList";
 
 import "./Remote.css";
+import PlayerElement from "./components/PlayerElement";
 
 export default class RemoteApp extends React.Component
 {
@@ -16,7 +18,7 @@ export default class RemoteApp extends React.Component
         super(props);
         const socket = getSocketClient(address.getServer());
 
-        this.state = { searchResults: [], queueItems: [] };
+        this.state = { searchResults: [], queueItems: [], playerItem: { data: { id: '', title: 'none' } } };
 
         this.socket = socket;
         this.handleSocketEvents(socket);
@@ -64,12 +66,21 @@ export default class RemoteApp extends React.Component
 
     playItemFromQueue(item)
     {
+        this.setState({ playerItem: item });
+
         this.socket.emit('queue:play', item);
     }
 
     removeItemFromQueue(item)
     {
         this.socket.emit('queue:remove', item);
+    }
+
+    playItemInPlayer(player)
+    {
+        this.socket.emit('player:play');
+
+        player.playVideo();
     }
 
     render()
@@ -90,6 +101,10 @@ export default class RemoteApp extends React.Component
                         onItemClick = {this.playItemFromQueue.bind(this)}
                     />
                 </div>
+                <PlayerElement
+                    item = {this.state.playerItem}
+                    onPlay = {this.playItemInPlayer.bind(this)}
+                />
             </div>
         );
     }

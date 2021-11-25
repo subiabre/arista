@@ -72,6 +72,10 @@ const events = (socket, io) =>
 
         io.emit('queue:update', queue.items);
     });
+
+    socket.on('player:play', item => {
+        io.emit('player:play');
+    });
 }
 
 module.exports = { listen };

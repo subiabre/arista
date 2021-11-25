@@ -32,7 +32,7 @@ body {
 
 .lists ul {
     width: calc(50vw - 2em);
-    height: calc(100vh - 3em);
+    height: calc(100vh - 8em);
     margin: 0;
     padding: 0;
     overflow-y: auto;
@@ -58,4 +58,19 @@ li img {
 
 .queue li.active {
     color: green;
+}
+
+.player {
+    width: calc(100vw - 2em);
+    height: 3em;
+    margin: 0;
+    padding: 1em;
+    display: block;
+    overflow: hidden;
+    background-color: blue;
+}
+
+.player-hidden-iframe {
+    height: 0;
+    visibility: hidden;
 }

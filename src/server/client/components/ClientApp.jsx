@@ -1,4 +1,5 @@
 import React from "react";
+import YouTube from "react-youtube";
 import getSocketClient, { Socket } from "socket.io-client";
 
 import address from "../../../modules/address";
@@ -10,7 +11,7 @@ export default class ClientApp extends React.Component
         super(props);
         const socket = getSocketClient(address.getServer());
 
-        this.state = { playing: { url: '' } }
+        this.state = { playing: { id: null }, player: null }
 
         this.socket = socket;
         this.handleSocketEvents(socket);
@@ -22,22 +23,41 @@ export default class ClientApp extends React.Component
      */
     handleSocketEvents(socket)
     {
-
         socket.on('server', data => {
             socket.emit('socket:side', 'client');
-            socket.emit('client:ready', this.socket.id);
         });
 
         socket.on('queue:play', data => {
             this.setState({ playing: data });
         });
+
+        socket.on('player:play', data => {
+            this.player.playVideo();
+        });
+    }
+
+    handlePlayerReady(event)
+    {
+        this.socket.emit('client:ready', this.socket.id);
+
+        this.player = event.target;
     }
 
     render()
     {
         return (
             <div>
-                {this.state.playing.url}
+                <YouTube
+                    videoId = {this.state.playing.id}
+                    onReady = {this.handlePlayerReady.bind(this)}
+                    opts = {{
+                        playerVars: {
+                            controls: 0,
+                            disablekb: 1,
+                            modestbranding: 1
+                        }
+                    }}
+                />
             </div>
         );
     }
